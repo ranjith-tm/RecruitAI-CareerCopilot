@@ -319,7 +319,7 @@ function renderResults(data) {
   renderInterviewTab(data.interview);
   renderBulletsTab(data.resume_bullets);
   renderSkillGapsTab(data.skill_gaps);
-  renderCoverLetterTab(data.cover_letter);
+  renderCoverLetterTab(data.cover_letter, data.errors || []);
   renderJobRankingsTab(data.job_rankings);
   switchTab(0);
   lucide.createIcons();
@@ -488,10 +488,15 @@ function renderSkillGapsTab(gaps) {
 }
 
 // Cover Letter
-function renderCoverLetterTab(letter) {
+function renderCoverLetterTab(letter, errors) {
   const el = $('cover-letter-text');
   if (!letter) {
-    el.textContent = 'No cover letter generated (requires primary job description).';
+    const clError = (errors || []).find(e => e.startsWith('cover_letter_generator:'));
+    if (clError) {
+      el.textContent = `Cover letter generation failed: ${clError.replace('cover_letter_generator: ', '')}`;
+    } else {
+      el.textContent = 'No cover letter generated (requires primary job description).';
+    }
     return;
   }
   el.textContent = letter;
