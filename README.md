@@ -1,4 +1,4 @@
-# RecruitAI
+# RecruitAI — Your Career Copilot
 
 **Multi-agent AI career assistant powered by LangGraph — analyze resumes, predict interviews, rewrite bullets, close skill gaps, and generate cover letters in one API call.**
 
