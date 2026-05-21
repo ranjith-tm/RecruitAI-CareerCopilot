@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RecruitAI — Career Copilot</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <svg class="logo-mark" width="36" height="36" viewBox="0 0 36 36" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logo-g" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#8b5cf6" />
+              <stop offset="0.5" stop-color="#3b82f6" />
+              <stop offset="1" stop-color="#22d3ee" />
+            </linearGradient>
+          </defs>
+          <rect width="36" height="36" rx="10" fill="url(#logo-g)" />
+          <!-- Outer precision ring -->
+          <circle cx="18" cy="18" r="10.5" stroke="rgba(255,255,255,0.32)" stroke-width="1.4" />
+          <!-- Inner ring -->
+          <circle cx="18" cy="18" r="6" stroke="rgba(255,255,255,0.58)" stroke-width="1.4" />
+          <!-- Center dot -->
+          <circle cx="18" cy="18" r="2.2" fill="white" />
+          <!-- Career trajectory arrow (top-right) -->
+          <line x1="21.5" y1="14.5" x2="26" y2="10" stroke="white" stroke-width="1.8" stroke-linecap="round" />
+          <polyline points="22.5,10 26,10 26,13.5" stroke="white" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" fill="none" />
+        </svg>
+        <span class="logo-word">Recruit<span class="logo-ai">AI</span></span>
+      </a>
+      <div class="header-badge">Powered by LangGraph</div>
+    </div>
+  </header>
+
+  <!-- ── Hero ────────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <p
+        style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--purple-l);margin-bottom:16px;display:inline-flex;align-items:center;gap:8px">
+        <span
+          style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--purple-l);box-shadow:0 0 8px var(--purple)"></span>
+        Multi-Agent AI &nbsp;·&nbsp; 7 Specialized Agents
+      </p>
+      <h1>Don't Submit Blind.<br /><span class="gradient-text">Know Your Odds First.</span></h1>
+      <p>Seven specialized AI agents benchmark your resume against the job description in under 30 seconds — scoring ATS
+        compatibility, predicting interview call probability, rewriting your bullets for measurable impact, mapping
+        skill gaps, and drafting a tailored cover letter.</p>
+      <div class="hero-chips">
+        <span class="chip"><i data-lucide="bar-chart-2"></i> ATS Analysis</span>
+        <span class="chip"><i data-lucide="phone-incoming"></i> Interview Probability</span>
+        <span class="chip"><i data-lucide="edit-3"></i> Resume Rewrites</span>
+        <span class="chip"><i data-lucide="trending-up"></i> Skill Gap Plan</span>
+        <span class="chip"><i data-lucide="mail"></i> Cover Letter</span>
+        <span class="chip"><i data-lucide="award"></i> Job Rankings</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="scroll-indicator-wrap">
+    <a class="scroll-mouse" href="#form-section" aria-label="Scroll to start">
+      <span class="scroll-thumb"></span>
+    </a>
+  </div>
+
+  <!-- ── Main Form ────────────────────────────────────────────────────────── -->
+  <main>
+    <div class="container">
+
+      <!-- Error banner -->
+      <div class="error-banner" id="error-banner">
+        <i data-lucide="alert-triangle"></i>
+        <span class="error-msg"></span>
+      </div>
+
+      <!-- FORM SECTION -->
+      <section class="form-section" id="form-section">
+        <div class="form-start-strip">
+          <i data-lucide="info"></i>
+          <span><strong>3 steps to get started:</strong> choose your AI engine &rarr; upload your resume &rarr; paste
+            the job description, then hit <strong>Run Full Analysis</strong>.</span>
+        </div>
+
+        <!-- ── Step 1: AI Engine Config ── -->
+        <div class="engine-card">
+          <div class="engine-card-title">Step 1 — Choose your AI engine</div>
+          <div class="engine-row">
+
+            <!-- Provider pills -->
+            <div class="provider-pills">
+              <button class="provider-pill active" data-provider="groq" id="pill-groq">
+                <i data-lucide="zap" class="pill-icon"></i>
+                <div>
+                  <div class="pill-name">Groq</div>
+                  <div class="pill-sub">Free · No key needed</div>
+                </div>
+              </button>
+              <button class="provider-pill" data-provider="openai" id="pill-openai">
+                <i data-lucide="sparkles" class="pill-icon"></i>
+                <div>
+                  <div class="pill-name">OpenAI</div>
+                  <div class="pill-sub">GPT-4o · Key required</div>
+                </div>
+              </button>
+            </div>
+
+            <!-- Model + key -->
+            <div class="engine-right">
+              <div class="engine-field">
+                <label>Model</label>
+                <select id="model">
+                  <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
+                  <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
+                  <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+                </select>
+              </div>
+
+              <div class="engine-field" id="key-field" style="display:none">
+                <label>API Key</label>
+                <input type="password" id="api-key" placeholder="sk-…" />
+              </div>
+
+              <div class="engine-field" id="groq-key-status">
+                <label>&nbsp;</label>
+                <div class="key-configured">
+                  <span class="key-configured-dot"></span>
+                  API key pre-configured
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Step 2: Resume + JD ── -->
+        <div class="form-grid">
+
+          <!-- Resume card -->
+          <div class="form-card">
+            <div class="form-card-title">Your Resume</div>
+
+            <div class="input-toggle">
+              <button class="toggle-btn active" data-mode="pdf"><i data-lucide="upload"></i> Upload PDF</button>
+              <button class="toggle-btn" data-mode="text"><i data-lucide="align-left"></i> Paste Text</button>
+            </div>
+
+            <!-- PDF dropzone -->
+            <div id="dropzone-section">
+              <input type="file" id="file-input" accept=".pdf" style="display:none" />
+              <div class="dropzone" id="dropzone">
+                <div class="dropzone-icon"><i data-lucide="upload-cloud"></i></div>
+                <p id="dropzone-text">Drag & drop your PDF or click to browse</p>
+                <p class="hint">Max 10 MB · PDF only</p>
+              </div>
+            </div>
+
+            <!-- Text input -->
+            <div id="text-section" class="hidden">
+              <textarea id="resume-text-input"
+                placeholder="Paste your full resume here — include all work experience, skills, and education…"></textarea>
+            </div>
+          </div>
+
+          <!-- Job description card -->
+          <div class="form-card">
+            <div class="form-card-title">Target Job Description</div>
+            <textarea id="job-desc"
+              placeholder="Paste the primary job description. The pipeline will score your ATS match, predict your call probability, rewrite your bullets, and generate a cover letter…"></textarea>
+
+            <!-- Multiple JDs accordion -->
+            <div class="accordion">
+              <div class="accordion-header" id="accordion-header">
+                <span style="display:flex;align-items:center;gap:8px"><i data-lucide="plus-circle"></i> Compare with
+                  multiple jobs (optional)</span>
+                <i data-lucide="chevron-down" id="accordion-arrow"></i>
+              </div>
+              <div class="accordion-body" id="accordion-body">
+                <p style="font-size:0.8rem;color:var(--txt-3);margin-bottom:12px">
+                  Add more roles to get a ranked comparison. RecruitAI will tell you which opportunity fits your profile
+                  best.
+                </p>
+                <div class="jd-list" id="jd-list"></div>
+                <button class="btn-ghost mt-16" id="add-jd-btn">+ Add another job</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target role (optional) -->
+        <div class="target-row">
+          <div class="engine-field">
+            <label>Target Role (optional)</label>
+            <input type="text" id="target-role" placeholder="e.g. Senior ML Engineer — helps tailor bullet rewrites" />
+          </div>
+        </div>
+
+        <div class="analyze-wrap">
+          <button class="btn-analyze" id="analyze-btn">
+            ✦ &nbsp;Run Full Analysis
+          </button>
+          <p style="color:var(--txt-3);font-size:0.78rem;margin-top:10px">
+            Analysis takes ~30–60 seconds depending on your provider
+          </p>
+        </div>
+
+      </section>
+
+      <!-- LOADING SECTION -->
+      <section class="loading-section hidden" id="loading-section">
+        <div class="spinner"></div>
+        <div class="loading-title">Agents are working…</div>
+        <div class="loading-sub">Your 7-agent pipeline is running. Sit back and relax.</div>
+        <div class="pipeline" id="pipeline-container"></div>
+      </section>
+
+      <!-- RESULTS SECTION -->
+      <section class="results-section hidden" id="results-section">
+
+        <!-- Back button -->
+        <div style="margin-bottom:24px">
+          <button class="btn-ghost" onclick="showForm()">← New Analysis</button>
+        </div>
+
+        <!-- Score cards -->
+        <div class="scores-row">
+          <div class="score-card" id="card-ats">
+            <div class="score-ring">
+              <svg width="80" height="80" viewBox="0 0 100 100">
+                <circle class="ring-bg" cx="50" cy="50" r="45" />
+                <circle class="ring-fill stroke-green" cx="50" cy="50" r="45" stroke-dasharray="283"
+                  stroke-dashoffset="283" data-val="0" />
+              </svg>
+              <div class="ring-text color-green">—</div>
+            </div>
+            <div class="score-info">
+              <div class="score-label">ATS SCORE</div>
+              <div class="score-title">Keyword Match</div>
+              <div class="score-sub">vs job description</div>
+            </div>
+          </div>
+
+          <div class="score-card" id="card-interview">
+            <div class="score-ring">
+              <svg width="80" height="80" viewBox="0 0 100 100">
+                <circle class="ring-bg" cx="50" cy="50" r="45" />
+                <circle class="ring-fill stroke-yellow" cx="50" cy="50" r="45" stroke-dasharray="283"
+                  stroke-dashoffset="283" data-val="0" />
+              </svg>
+              <div class="ring-text color-yellow">—</div>
+            </div>
+            <div class="score-info">
+              <div class="score-label">INTERVIEW ODDS</div>
+              <div class="score-title">Call Probability</div>
+              <div class="score-sub">predicted likelihood</div>
+            </div>
+          </div>
+
+          <div class="score-card" id="card-readability">
+            <div class="score-ring">
+              <svg width="80" height="80" viewBox="0 0 100 100">
+                <circle class="ring-bg" cx="50" cy="50" r="45" />
+                <circle class="ring-fill stroke-green" cx="50" cy="50" r="45" stroke-dasharray="283"
+                  stroke-dashoffset="283" data-val="0" />
+              </svg>
+              <div class="ring-text color-green">—</div>
+            </div>
+            <div class="score-info">
+              <div class="score-label">READABILITY</div>
+              <div class="score-title">Recruiter Score</div>
+              <div class="score-sub">format &amp; clarity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results tabs -->
+        <div class="tabs-wrapper">
+          <nav class="tabs-nav">
+            <button class="tab-btn active"><i data-lucide="user"></i> Profile</button>
+            <button class="tab-btn"><i data-lucide="bar-chart-2"></i> ATS Analysis</button>
+            <button class="tab-btn"><i data-lucide="phone-incoming"></i> Interview Odds</button>
+            <button class="tab-btn"><i data-lucide="edit-3"></i> Resume Rewrites</button>
+            <button class="tab-btn"><i data-lucide="trending-up"></i> Skill Gaps</button>
+            <button class="tab-btn"><i data-lucide="mail"></i> Cover Letter</button>
+            <button class="tab-btn"><i data-lucide="award"></i> Job Rankings</button>
+          </nav>
+
+          <!-- ── Tab 0: Profile ── -->
+          <div class="tab-panel active">
+            <div class="profile-header">
+              <div class="avatar" id="profile-initials">RA</div>
+              <div>
+                <div class="profile-name" id="profile-name">—</div>
+                <div class="profile-meta" id="profile-meta">—</div>
+              </div>
+            </div>
+
+            <p id="profile-summary" style="color:var(--txt-2);font-size:0.9rem;line-height:1.7;margin-bottom:20px"></p>
+
+            <div class="section-title">Technical Skills</div>
+            <div class="skills-cloud" id="tech-skills"></div>
+
+            <div class="section-title">Soft Skills</div>
+            <div class="skills-cloud" id="soft-skills"></div>
+
+            <div class="section-title">Domain Expertise</div>
+            <div class="skills-cloud" id="domain-skills"></div>
+
+            <div class="section-title">Education</div>
+            <p id="education-text" style="color:var(--txt-2);font-size:0.88rem"></p>
+          </div>
+
+          <!-- ── Tab 1: ATS Analysis ── -->
+          <div class="tab-panel">
+            <h3 style="margin-bottom:20px">ATS Score Breakdown</h3>
+            <div class="breakdown-grid" id="ats-breakdown-grid"></div>
+
+            <h3 style="margin:24px 0 12px">Missing Keywords</h3>
+            <div class="keywords-list" id="missing-keywords"></div>
+
+            <div style="margin-top:20px;color:var(--txt-2);font-size:0.88rem">
+              Keyword Density: <strong id="keyword-density" style="color:var(--cyan)">—</strong>
+              &nbsp;·&nbsp;
+              <span style="color:var(--txt-3);font-size:0.78rem">Higher is better for ATS systems</span>
+            </div>
+          </div>
+
+          <!-- ── Tab 2: Interview Odds ── -->
+          <div class="tab-panel">
+            <div style="margin-bottom:28px">
+              <div style="color:var(--txt-2);font-size:0.85rem;margin-bottom:4px">Predicted interview call probability
+              </div>
+              <div class="prob-big color-green" id="prob-value">—</div>
+              <div style="color:var(--txt-2);font-size:0.85rem">based on your profile vs. job requirements</div>
+            </div>
+
+            <h3 style="margin-bottom:16px">Factor Breakdown</h3>
+            <div class="prob-factors" id="prob-factors"></div>
+
+            <div class="two-col mt-16">
+              <div>
+                <div class="section-title">Strengths</div>
+                <div class="strengths-list" id="interview-strengths"></div>
+              </div>
+              <div>
+                <div class="section-title">Areas to Improve</div>
+                <div class="weaknesses-list" id="interview-weaknesses"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Tab 3: Resume Rewrites ── -->
+          <div class="tab-panel">
+            <p style="color:var(--txt-2);font-size:0.88rem;margin-bottom:20px">
+              Before/after rewrites of your top experience bullets — optimized for impact and ATS keywords.
+            </p>
+            <div id="bullets-container"></div>
+          </div>
+
+          <!-- ── Tab 4: Skill Gaps ── -->
+          <div class="tab-panel">
+            <div class="gaps-grid" style="margin-bottom:28px">
+              <div class="gap-card">
+                <h4 style="display:flex;align-items:center;gap:8px"><i data-lucide="alert-circle"
+                    style="width:16px;height:16px;color:var(--red)"></i> Critical Gaps <span
+                    style="color:var(--txt-3);font-weight:400;font-size:0.8rem">— must have</span></h4>
+                <div class="gap-list" id="critical-gaps"></div>
+              </div>
+              <div class="gap-card">
+                <h4 style="display:flex;align-items:center;gap:8px"><i data-lucide="circle"
+                    style="width:16px;height:16px;color:var(--yellow)"></i> Nice to Have <span
+                    style="color:var(--txt-3);font-weight:400;font-size:0.8rem">— bonus points</span></h4>
+                <div class="gap-list" id="nice-gaps"></div>
+              </div>
+            </div>
+
+            <h3 style="margin-bottom:16px;display:flex;align-items:center;gap:8px"><i data-lucide="book-open"
+                style="width:18px;height:18px"></i> Personalized Learning Plan</h3>
+            <div class="learning-list" id="learning-list"></div>
+          </div>
+
+          <!-- ── Tab 5: Cover Letter ── -->
+          <div class="tab-panel">
+            <p style="color:var(--txt-2);font-size:0.88rem;margin-bottom:16px">
+              AI-generated cover letter tailored to this specific job description.
+            </p>
+            <div class="cover-letter-actions">
+              <button class="btn-action" id="copy-btn"><i data-lucide="clipboard"></i> Copy</button>
+              <button class="btn-action" id="download-btn"><i data-lucide="download"></i> Download .txt</button>
+            </div>
+            <div class="cover-letter-box" id="cover-letter-text"></div>
+          </div>
+
+          <!-- ── Tab 6: Job Rankings ── -->
+          <div class="tab-panel">
+            <p style="color:var(--txt-2);font-size:0.88rem;margin-bottom:20px">
+              Ranked by match score across all job descriptions you provided.
+            </p>
+            <div class="job-cards" id="job-rankings-container"></div>
+          </div>
+
+        </div><!-- tabs-wrapper -->
+
+      </section><!-- results -->
+
+    </div><!-- container -->
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      Built with <strong>FastAPI</strong> · <strong>LangGraph</strong> · <strong>LangChain</strong>
+      &nbsp;|&nbsp;
+      <a href="/docs" target="_blank">API Docs</a>
+      &nbsp;|&nbsp;
+      <a href="/redoc" target="_blank">ReDoc</a>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>
